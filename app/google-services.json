@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "709276426678",
+    "firebase_url": "https://directedbasketdev-default-rtdb.firebaseio.com",
+    "project_id": "directedbasketdev",
+    "storage_bucket": "directedbasketdev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709276426678:android:a318696f9e22cdd45c6117",
+        "android_client_info": {
+          "package_name": "udec.sutatausa.directedbasket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "709276426678-gu19ig0p0kdcgafcgo5vri5k4e70v58p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7WRHSvSq5KS2stxJJIQjsq669t7nlCD0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "709276426678-gu19ig0p0kdcgafcgo5vri5k4e70v58p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

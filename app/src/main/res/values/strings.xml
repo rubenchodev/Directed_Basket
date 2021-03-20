@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Directed Basket</string>
+    <string name="title_alert">Mensaje</string>
+    <string name="alert_ok">Aceptar</string>
+    <string name="alert_cancel">Cancelar</string>
+    <string name="loading_text_login">Iniciando sesión...</string>
+    <string name="default_message_error">Lo sentimos no fue posible procesar su solicitud</string>
+    <string name="message_confirm_signout">¿Seguro(a) desea cerrar sesión?</string>
+</resources>
