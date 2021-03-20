@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login);
 
-        // Incializamos la instancia con Firebase autentication y realtime
+        // Incializamos la instancia con Firebase autentication y database realtime
         auth = Firebase.auth;
         mDatabase = Firebase.database.getReference();
 
