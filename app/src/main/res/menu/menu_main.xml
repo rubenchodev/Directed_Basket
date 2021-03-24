@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/iconLogout"
+        android:icon="@drawable/ic_baseline_exit_to_app_white_28"
+        app:showAsAction="ifRoom"
+        android:title="Cerrar sesión">
+    </item>
+</menu>

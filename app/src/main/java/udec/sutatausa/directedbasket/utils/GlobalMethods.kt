@@ -1,10 +1,14 @@
 package udec.sutatausa.directedbasket.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.graphics.Color
 import android.util.Patterns
+import android.widget.Button
 import udec.sutatausa.directedbasket.R
+
 
 /**
  * Se crea la clase que vamos a usar en todas las actividades existentes
@@ -23,10 +27,11 @@ class GlobalMethods( activity: Activity){
     /**
      * Permite mostrar mensaje en la interfaz
      */
+    @SuppressLint("ResourceAsColor")
     fun showAlert(title: String?, message: String?, listener: DialogInterface.OnClickListener? ) {
 
         // Creamos una interfaz de dialogo para mostrar el mensa
-        val builder = AlertDialog.Builder(myActivity);
+        val builder = AlertDialog.Builder(myActivity, R.style.AlertDialogCustom);
 
         // definimos la variable para guardar el titulo
         var titleAlert = title;
@@ -47,10 +52,11 @@ class GlobalMethods( activity: Activity){
     /**
      * Permite mostrar mensaje de confirmación
      */
+    @SuppressLint("ResourceAsColor")
     fun showConfirm(message: String?, listener: DialogInterface.OnClickListener? ) {
 
         // Creamos una interfaz de dialogo para mostrar el mensa
-        val builder = AlertDialog.Builder(myActivity);
+        val builder = AlertDialog.Builder(myActivity, R.style.AlertDialogCustom);
 
         // agregamos las propiedades
         builder.setTitle(R.string.title_alert)
