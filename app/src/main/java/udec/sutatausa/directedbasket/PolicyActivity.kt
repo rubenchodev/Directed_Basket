@@ -117,6 +117,9 @@ class PolicyActivity : AppCompatActivity() {
         // cerramos sesión
         Firebase.auth.signOut();
 
+        // ELiminamos la propiedad en la que guarda la contraseña
+        GlobalMethods.removeProperty(this, "password_curr");
+
         // Validamos la versión con el objetivo de cerar por completo la aplicación
         if (Build.VERSION.SDK_INT >= 16 && Build.VERSION.SDK_INT < 21) {
             finishAffinity();
@@ -128,7 +131,6 @@ class PolicyActivity : AppCompatActivity() {
 
         // Salimos del aplicativo
         System.exit(0);
-
     }
 
     /**

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewStudentActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_student_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title=""
+        app:titleTextColor="@color/colorWhite"
+        tools:ignore="MissingConstraints">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="26dp"
+            android:layout_alignParentLeft="true"
+            android:scaleType="center"
+            android:src="@drawable/logo_action_bar"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="12dp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="409dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_student_bar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/txtStudentName"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin_field_student"
+                android:layout_marginLeft="@dimen/margin_field_student"
+                android:layout_marginTop="@dimen/margin_field_student"
+                android:layout_marginEnd="@dimen/margin_field_student"
+                android:layout_marginRight="@dimen/margin_field_student"
+                android:background="@drawable/login_input_style"
+                android:drawableRight="@drawable/ic_baseline_person_28_blue"
+                android:gravity="center_vertical"
+                android:hint="Nombre completo"
+                android:inputType="text"
+                android:padding="12dp" />
+
+            <EditText
+                android:id="@+id/txtStudentEmail"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin_field_student"
+                android:layout_marginLeft="@dimen/margin_field_student"
+                android:layout_marginTop="@dimen/margin_field_student"
+                android:layout_marginEnd="@dimen/margin_field_student"
+                android:layout_marginRight="@dimen/margin_field_student"
+                android:background="@drawable/login_input_style"
+                android:drawableRight="@drawable/ic_baseline_email_28"
+                android:gravity="center_vertical"
+                android:hint="Correo electrónico"
+                android:inputType="textEmailAddress"
+                android:padding="12dp" />
+
+            <EditText
+                android:id="@+id/txtStudentPassword"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin_field_student"
+                android:layout_marginLeft="@dimen/margin_field_student"
+                android:layout_marginTop="@dimen/margin_field_student"
+                android:layout_marginEnd="@dimen/margin_field_student"
+                android:layout_marginRight="@dimen/margin_field_student"
+                android:background="@drawable/login_input_style"
+                android:drawableRight="@drawable/ic_baseline_lock_28_blue"
+                android:gravity="center_vertical"
+                android:hint="Contraseña"
+                android:inputType="textPassword"
+                android:padding="12dp" />
+
+            <EditText
+                android:id="@+id/txtStudentBithDay"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin_field_student"
+                android:layout_marginLeft="@dimen/margin_field_student"
+                android:layout_marginTop="@dimen/margin_field_student"
+                android:layout_marginEnd="@dimen/margin_field_student"
+                android:layout_marginRight="@dimen/margin_field_student"
+                android:background="@drawable/login_input_style"
+                android:drawableRight="@drawable/ic_baseline_date_range_28"
+                android:gravity="center_vertical"
+                android:hint="Fecha de nacimiento"
+                android:inputType="date"
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:padding="12dp" />
+
+            <EditText
+                android:id="@+id/txtStudentHeight"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin_field_student"
+                android:layout_marginLeft="@dimen/margin_field_student"
+                android:layout_marginTop="@dimen/margin_field_student"
+                android:layout_marginEnd="@dimen/margin_field_student"
+                android:layout_marginRight="@dimen/margin_field_student"
+                android:background="@drawable/login_input_style"
+                android:drawableRight="@drawable/ic_baseline_emoji_people_28"
+                android:gravity="center_vertical"
+                android:hint="Altura"
+                android:inputType="number"
+                android:padding="12dp" />
+
+            <EditText
+                android:id="@+id/txtStudentWeight"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/margin_field_student"
+                android:layout_marginLeft="@dimen/margin_field_student"
+                android:layout_marginTop="@dimen/margin_field_student"
+                android:layout_marginEnd="@dimen/margin_field_student"
+                android:layout_marginRight="@dimen/margin_field_student"
+                android:background="@drawable/login_input_style"
+                android:drawableRight="@drawable/ic_baseline_line_weight_28_blue"
+                android:gravity="center_vertical"
+                android:hint="Peso"
+                android:inputType="number"
+                android:padding="12dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_field_student"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/btnImageStudent"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/ic_baseline_add_a_photo_36"
+                    android:clickable="true"
+                    android:padding="8dp"
+                    tools:srcCompat="@drawable/ic_baseline_add_a_photo_36" />
+
+                <ImageView
+                    android:id="@+id/imageViewStudent"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|top"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btnStudentSubmit"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginBottom="@dimen/margin_field_student"
+                    android:gravity="center"
+                    android:text="Guardar"
+                    android:clickable="true"
+                    android:textColor="@color/colorWhite"
+                    android:padding="8dp"
+                    android:textSize="16dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

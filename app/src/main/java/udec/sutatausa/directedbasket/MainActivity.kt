@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     var myHomeToolbar: Toolbar? = null;
     var recyclerViewUserList: RecyclerView? = null;
     lateinit var swipeRefreshLayout: SwipeRefreshLayout;
+    lateinit var btnShowPanelNewStudent: View;
 
     // variable que determina la lista que vamos a usar
     val mAdapter : UserListAdapter = UserListAdapter();
@@ -61,6 +63,7 @@ class MainActivity : AppCompatActivity() {
         // inicializamos los elementos de la vista
         recyclerViewUserList = findViewById(R.id.recyclerViewUserList);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayoutHome);
+        btnShowPanelNewStudent = findViewById(R.id.btnShowPanelNewStudent);
 
         // iniciamos la clase
         GlobalMethods = GlobalMethods(this);
@@ -83,12 +86,15 @@ class MainActivity : AppCompatActivity() {
         swipeRefreshLayout.setColorSchemeResources(R.color.colorWhite);
         swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorPrimary);
 
-        /*al fab: View = findViewById(R.id.floating_action_button)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .show()
-        }*/
+        // agregamos el ebvento al panel de crear usuario
+        btnShowPanelNewStudent.setOnClickListener { view ->
+
+            // Mostramos la actividad
+            startActivity(Intent(this, NewStudentActivity::class.java));
+
+            // Cerramos esta actividad
+            finish();
+        }
 
     }
 
@@ -126,7 +132,7 @@ class MainActivity : AppCompatActivity() {
 
                     // inicamos la lista
                     if (userList != null) {
-                        initRecycler(userList);
+                        initRecyclerHome(userList);
                     };
 
                     // Ocultamos el loading
@@ -144,7 +150,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * Permite iniciar el recycler
      */
-    fun initRecycler(list: MutableList<UserDataHome>){
+    fun initRecyclerHome(list: MutableList<UserDataHome>){
 
         // Definimos una configuración basica
         recyclerViewUserList?.setHasFixedSize(true)
@@ -184,6 +190,9 @@ class MainActivity : AppCompatActivity() {
         // mostramos la ventana de confirmación
         GlobalMethods.showConfirm(getString(R.string.message_confirm_signout), DialogInterface.OnClickListener { dialogInterface, i ->
 
+            // ELiminamos la propiedad en la que guarda la contraseña
+            GlobalMethods.removeProperty(this, "password_curr");
+
             // cerramos seción
             Firebase.auth.signOut();
 
@@ -197,5 +206,14 @@ class MainActivity : AppCompatActivity() {
             finish();
         });
 
+    }
+
+    /**
+     * Permite ejecutar un evento al oprimir la fecha de atras
+     */
+    override fun onBackPressed() {
+
+        // Se llama el metodo de cerar sesión
+        signOutEvent();
     }
 }

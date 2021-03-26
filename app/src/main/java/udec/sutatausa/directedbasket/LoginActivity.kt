@@ -66,7 +66,7 @@ class LoginActivity : AppCompatActivity() {
         // obtenemos los datos de login
         val email = emailLoginElement?.text.toString();
         val password = passwordLoginElement?.text.toString();
-        println("yesss")
+
         // validamos si existe un correo y una contraseña
         if(!email.isEmpty() && !password.isEmpty()) {
 
@@ -79,12 +79,11 @@ class LoginActivity : AppCompatActivity() {
                 // haciendo uso de Firebase Autentication se valida el ingreso del usuario
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
-                        println(task)
                         // si es correcto el login se procede a ingrear al home del aplicativo
                         if (task.isSuccessful) {
 
                             // verificamos si el usuario esta registrado en la base de datos realtime y si ya autorizo politicas
-                            verifyUserState();
+                            verifyUserState(password);
 
                         } else {
                             // Se muestra el mensaje indicando que el mensaje es incorrecto
@@ -106,7 +105,7 @@ class LoginActivity : AppCompatActivity() {
     /**
      * Permite verificar el tipo de perfil, y si ya autorizo politicas
      */
-    private fun verifyUserState() {
+    private fun verifyUserState(password: String) {
 
         // obtenemos el id del usuario
         val userId: String = auth.currentUser.uid;
@@ -122,6 +121,9 @@ class LoginActivity : AppCompatActivity() {
 
             // realizamos la apertura de la actividad principal
             var intent: Intent? = null;
+
+            // Agregamos en una propieda la constraseña del usuario activo
+            GlobalMethods.addPropertyValue(this, "password_curr", password);
 
             // validamos si el usuario ya se logueo
             if(response.getBoolean("policy")){
@@ -141,6 +143,9 @@ class LoginActivity : AppCompatActivity() {
             finish();
 
         }.addOnFailureListener{
+
+            // ELiminamos la propiedad en la que guarda la contraseña
+            GlobalMethods.removeProperty(this, "password_curr");
 
             // cerramos sesión por si la inicio
             Firebase.auth.signOut();

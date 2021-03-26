@@ -30,6 +30,7 @@ internal class SplashScreen : AppCompatActivity() {
      */
     public override fun onStart() {
         super.onStart();
+
         // Compruebe si el usuario se inicia sesión (no nulo) y actualiza UI en consecuencia.
         val currentUser = auth.currentUser;
 

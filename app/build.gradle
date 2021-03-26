@@ -48,6 +48,7 @@ dependencies {
     // libreria para el uso de autenticación con Kotlin
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-database-ktx'
+    implementation 'com.google.firebase:firebase-storage-ktx'
 
     // Libreria para el manejo de imagenes
     implementation 'com.squareup.picasso:picasso:2.71828'
