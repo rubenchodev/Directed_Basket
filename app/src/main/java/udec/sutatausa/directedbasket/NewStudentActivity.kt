@@ -28,10 +28,13 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
-import udec.sutatausa.directedbasket.BasicClass.NewUserObject
+import org.json.JSONObject
+import udec.sutatausa.directedbasket.BasicClass.NewUserObject;
 import udec.sutatausa.directedbasket.utils.GlobalMethods
+import udec.sutatausa.directedbasket.utils.HttpTask
 import udec.sutatausa.directedbasket.utils.LoadingDialog
 import java.io.ByteArrayOutputStream
+import java.net.HttpURLConnection
 import java.util.*
 
 
@@ -209,7 +212,7 @@ class NewStudentActivity : AppCompatActivity() {
                                 if (task.isSuccessful) {
 
                                     // Se procede a subir la imagen del usuario
-                                    uploadImageInStorage(newUserID, nameValue, emailValue, dateValue, heightValue, weightValue);
+                                    uploadImageInStorage(newUserID, passValue, nameValue, emailValue, dateValue, heightValue, weightValue);
 
                                 } else {
                                     // Se muestra el mensaje indicando que el mensaje es incorrecto
@@ -235,7 +238,7 @@ class NewStudentActivity : AppCompatActivity() {
     /**
      * Permite subir la imagen a firebase Storage
      */
-    fun uploadImageInStorage(newUserId: String, name: String, email: String, date: String, height: String, weight: String){
+    fun uploadImageInStorage(newUserId: String, password: String, name: String, email: String, date: String, height: String, weight: String){
 
         // obtenemos el dato de la imagen
         imageViewStudentElement.invalidate();
@@ -263,7 +266,7 @@ class NewStudentActivity : AppCompatActivity() {
                     if (taskUrl.isSuccessful) {
 
                         // se procede a registrar los datos en la base de datos detiempo real
-                        registerDataInDatabase(newUserId, name, email, date, height, weight, taskUrl.result.toString());
+                        registerDataInDatabase(newUserId, password, name, email, date, height, weight, taskUrl.result.toString());
                     } else {
 
                         // mostramos el error
@@ -272,7 +275,7 @@ class NewStudentActivity : AppCompatActivity() {
                 }
             } else {
                 // se procede a registrar los datos en la base de datos de tiempo real, pero sin imagen
-                registerDataInDatabase(newUserId, name, email, date, height, weight, "");
+                registerDataInDatabase(newUserId, password, name, email, date, height, weight, "");
             }
         }
     }
@@ -280,7 +283,7 @@ class NewStudentActivity : AppCompatActivity() {
     /**
      * Agregamos al información en la base de datos de tiempo real
      */
-    fun registerDataInDatabase(newUserId: String, name: String, email: String, date: String, height: String, weight: String, imageUrl: String){
+    fun registerDataInDatabase(newUserId: String, password: String, name: String, email: String, date: String, height: String, weight: String, imageUrl: String){
 
         // obtenemos la información del nuevo usuario
         val masterUserID = auth.currentUser.uid;
@@ -291,6 +294,9 @@ class NewStudentActivity : AppCompatActivity() {
         // Insertamos el nuevo registro
         mDatabase.child("users").child(newUserId).setValue(userObject)
         .addOnSuccessListener {
+
+            // se procede a enviar un correo al nuevo usuario
+            sendMailNewUser(name, email, password);
 
             // Mostramos la ventana de error
             GlobalMethods.showAlert("Nuevo estudiante registrado", "El estudiante con el correo $email fue registrado correctamente.", DialogInterface.OnClickListener  { dialog, which ->
@@ -309,6 +315,35 @@ class NewStudentActivity : AppCompatActivity() {
             // mostramos el error
             showError("No es posible registar los datos en este momento por el siguiente motivo: '$it'.");
         }
+    }
+
+    /**
+     * Permiet enviar el correo al usuario
+     */
+    fun sendMailNewUser(userName: String, userEmail: String, password: String){
+
+        // Definimos la URL a consumir
+        val url = "https://script.google.com/macros/s/AKfycbwHrcjyp9WMfWWgzmvgB1I-YViCC2FU0J5cGjCpMN8B0ckRqwQF/exec";
+
+        // definimos los datos a enviar
+        val json = JSONObject();
+        json.put("userName", userName);
+        json.put("userEmail", userEmail);
+        json.put("password", password);
+
+        // definimos el objeto base
+        val mainJson = JSONObject();
+        mainJson.put("method", "sendMailNewUser");
+        mainJson.put("params", json);
+
+        // se realiza la petición
+        HttpTask( {
+            if (it == null) {
+                println("Error de conexión");
+                return@HttpTask;
+            }
+            println(it)
+        } ).execute("POST", url, mainJson.toString());
     }
 
     /**

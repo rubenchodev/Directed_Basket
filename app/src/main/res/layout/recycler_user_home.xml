@@ -6,6 +6,7 @@
     android:layout_height="170dp">
 
     <LinearLayout
+        android:id="@+id/recyclerCard"
         android:layout_width="280dp"
         android:layout_height="0dp"
         android:layout_margin="16dp"

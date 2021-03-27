@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.recycler_user_home.view.*
@@ -64,6 +66,7 @@ class UserListAdapter: RecyclerView.Adapter<UserListAdapter.UserListHolder>() {
         // inicamos la referencia de los elementos
         val recyclerUserName = view.findViewById(R.id.recyclerUserName) as TextView;
         val recyclerUserImage = view.findViewById(R.id.recyclerUserImage) as ImageView;
+        val recyclerCard = view.findViewById(R.id.recyclerCard) as LinearLayout;
 
         /**
          * Creamos el metodo para renderizar nustro objeto y datos
@@ -73,6 +76,11 @@ class UserListAdapter: RecyclerView.Adapter<UserListAdapter.UserListHolder>() {
             // cargamos cada uno de los valores
             recyclerUserName.text = userData.userName;
             recyclerUserImage.loadUrl(userData.image);
+
+            // agregamos el evento para que al dar clic muestr el panel de detalles
+            recyclerCard.setOnClickListener(){
+                Toast.makeText(view.context, "Testing: ${userData.userId}", Toast.LENGTH_LONG).show();
+            }
         }
 
         /**

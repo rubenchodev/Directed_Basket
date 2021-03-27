@@ -10,4 +10,4 @@ data class NewUserObject (
     var height: String,
     var weight: String,
     var birthDay: String
-)
+);

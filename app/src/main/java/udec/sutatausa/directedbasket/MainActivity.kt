@@ -83,8 +83,8 @@ class MainActivity : AppCompatActivity() {
         swipeRefreshLayout.isRefreshing = true;
 
         // Personalizamos el loading
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorWhite);
-        swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorPrimary);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorWhite);
 
         // agregamos el ebvento al panel de crear usuario
         btnShowPanelNewStudent.setOnClickListener { view ->
