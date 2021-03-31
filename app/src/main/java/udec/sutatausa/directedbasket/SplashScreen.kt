@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import org.json.JSONObject
+import udec.sutatausa.directedbasket.BasicClass.UserObject
 
 internal class SplashScreen : AppCompatActivity() {
 
@@ -34,9 +35,6 @@ internal class SplashScreen : AppCompatActivity() {
         // Compruebe si el usuario se inicia sesión (no nulo) y actualiza UI en consecuencia.
         val currentUser = auth.currentUser;
 
-        // realizamos la apertura de la actividad principal
-        var intent: Intent? = null;
-
         // validamos si el usuario ya se logueo
         if(currentUser != null){
 
@@ -45,34 +43,57 @@ internal class SplashScreen : AppCompatActivity() {
 
             // consultamos si existe información del usuario
             mDatabase.child("users").child(userId).get().addOnSuccessListener {
+                try{
 
-                //  variable para obtener el objeto
-                val response = JSONObject(it.value.toString());
+                    // Obtenemos los datos del usuario
+                    val userDataSplash: UserObject? = it.getValue(UserObject::class.java);
 
-                // validamos si el usuario ya se logueo
-                if(response.getBoolean("policy")){
+                    // validamos si el usuario ya se logueo
+                    if(userDataSplash != null && userDataSplash.policy!!){
 
-                    // realizamos la apertura de la actividad principal
-                    startActivitySplash(Intent(this, MainActivity::class.java));
-                } else {
+                        // se valida si el usuario tiene el rol de "coach", es decir, si es el entrenador
+                        if(userDataSplash.profile == "coach") {
+
+                            // realizamos la apertura de la actividad principal
+                            startActivitySplash(Intent(this, MainActivity::class.java));
+                        } else {
+
+                            // realizamos la apertura de la actividad principal para el estudiante
+                            startActivitySplash(Intent(this, PlayerActivity::class.java));
+                        }
+                    } else {
+
+                        // realizamos la apertura de la actividad de login
+                        showMainActivity();
+                    }
+                } catch (ex: Exception){
 
                     // realizamos la apertura de la actividad de login
-                    startActivitySplash(Intent(this, LoginActivity::class.java));
+                    showMainActivity();
                 }
 
             }.addOnFailureListener{
 
-                // cerramos sesión por si la inicio
-                Firebase.auth.signOut();
-
                 // realizamos la apertura de la actividad de login
-                startActivitySplash(Intent(this, LoginActivity::class.java));
+                showMainActivity();
             }
         } else {
 
             // realizamos la apertura de la actividad de login
-            startActivitySplash(Intent(this, LoginActivity::class.java));
+            showMainActivity();
         }
+    }
+
+    /**
+     * Permite mostrar la actividad por defecto
+     */
+    fun showMainActivity(){
+
+        // cerramos sesión por si la inicio
+        Firebase.auth.signOut();
+
+        // realizamos la apertura de la actividad de login
+        startActivitySplash(Intent(this, LoginActivity::class.java));
     }
 
     /**
@@ -85,6 +106,5 @@ internal class SplashScreen : AppCompatActivity() {
 
         // Cerramos esta actividad
         finish();
-
     }
 }

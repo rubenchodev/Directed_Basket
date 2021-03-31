@@ -52,4 +52,7 @@ dependencies {
 
     // Libreria para el manejo de imagenes
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // Libreria para la gestión de graficas
+    implementation 'im.dacer:AndroidCharts:1.0.4'
 }

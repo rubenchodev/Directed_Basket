@@ -4,7 +4,8 @@
     <item
         android:drawable="@color/colorWhite"/>
     <item
-        android:gravity="center">
+        android:gravity="center"
+        android:width="250dp">
         <bitmap
             android:mipMap="false"
             android:gravity="fill"

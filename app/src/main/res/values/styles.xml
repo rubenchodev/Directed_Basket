@@ -37,7 +37,7 @@
 
     <style name="AlertDialogTheme">
         <item name="buttonBarPositiveButtonStyle">@style/Alert.Button.Positive</item>
-        <item name="buttonBarNeutralButtonStyle">@style/Alert.Button.Neutral</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Alert.Button.Negative</item>
     </style>
 
     <style name="Alert.Button.Positive" parent="Widget.MaterialComponents.Button.TextButton">
@@ -48,10 +48,10 @@
         <item name="android:layout_marginLeft">8sp</item>
     </style>
 
-    <style name="Alert.Button.Neutral" parent="Widget.MaterialComponents.Button.TextButton">
+    <style name="Alert.Button.Negative" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="backgroundTint">@android:color/transparent</item>
-        <item name="rippleColor">@color/colorAccent</item>
-        <item name="android:textColor">@color/colorWhite</item>
+        <item name="rippleColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">13sp</item>
     </style>
 </resources>

@@ -4,11 +4,14 @@
     <string name="alert_ok">Aceptar</string>
     <string name="alert_cancel">Cancelar</string>
     <string name="loading_text_login">Iniciando sesión...</string>
+    <string name="loading_text_player_detail">Consultando información...</string>
+    <string name="loading_text_policy">Aceptando terminos y condiciones...</string>
     <string name="loading_text_new_user">Registrando usuario...</string>
     <string name="default_message_error">Lo sentimos no fue posible procesar su solicitud</string>
     <string name="message_confirm_signout">¿Seguro(a) desea cerrar sesión?</string>
-    <string name="message_confirm_new_user">¿Seguro(a) desea crear el nuevo estudiante?</string>
-    <string name="message_confirm_new_student">¿Seguro(a) desea cancelar el registro de un nuevo estudiante?</string>
+    <string name="message_confirm_statistic">¿Seguro(a) desea cancelar el registro de las estadisticas?</string>
+    <string name="message_confirm_new_user">¿Seguro(a) desea crear el nuevo jugador?</string>
+    <string name="message_confirm_new_student">¿Seguro(a) desea cancelar el registro de un nuevo jugador?</string>
     <string name="title_date_picker">Seleccionar fecha</string>
     <string name="text_photo_selector_new">Selecciona una foto</string>
     <string name="text_file_manager_new">Instala un administrador de archivos.</string>

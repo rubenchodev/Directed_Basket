@@ -14,7 +14,9 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import org.json.JSONObject
+import udec.sutatausa.directedbasket.BasicClass.UserObject
 import udec.sutatausa.directedbasket.utils.GlobalMethods
+import udec.sutatausa.directedbasket.utils.LoadingDialog
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStream
@@ -33,6 +35,7 @@ class PolicyActivity : AppCompatActivity() {
 
     // instanciamos la clase de funciones generales
     lateinit var GlobalMethods: GlobalMethods;
+    lateinit var loadingDialog: LoadingDialog;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
@@ -59,7 +62,10 @@ class PolicyActivity : AppCompatActivity() {
         mDatabase = Firebase.database.getReference();
 
         // iniciamos la clase
-        GlobalMethods = GlobalMethods(this);
+        GlobalMethods = GlobalMethods(this)
+
+        // Se inicializa el dialog
+        loadingDialog = LoadingDialog(this, getString(R.string.loading_text_policy));
     }
 
     /**
@@ -70,23 +76,50 @@ class PolicyActivity : AppCompatActivity() {
         // obtenemos el id del usuario
         val userId: String = auth.currentUser.uid;
 
-        // actualizamos el estado del usuario
-        mDatabase.child("users").child(userId).child("policy").setValue(true).addOnSuccessListener {
+        // mostramos el loading
+        loadingDialog.startLoadingDialog();
 
-            // realizamos la apertura de la actividad principal
-            var intent: Intent? = Intent(this, MainActivity::class.java);
+        // consultamos si existe información del usuario
+        mDatabase.child("users").child(userId).get().addOnSuccessListener {
 
-            // Mostramos la actividad
-            startActivity(intent);
+            // Obtenemos los datos del usuario
+            val userDataPolicy: UserObject? = it.getValue(UserObject::class.java);
 
-            // Cerramos esta actividad
-            finish();
+            // actualizamos el estado del usuario
+            mDatabase.child("users").child(userId).child("policy").setValue(true).addOnSuccessListener {
+
+                // realizamos la apertura de la actividad principal
+                var intent: Intent? = null;
+
+                // se valida si el usuario tiene el rol de "coach"
+                if(userDataPolicy?.profile == "coach") {
+                    // realizamos la apertura de la actividad principal
+                    intent = Intent(this, MainActivity::class.java);
+                } else {
+                    // realizamos la apertura de la actividad principal del jugador
+                    intent = Intent(this, PlayerActivity::class.java);
+                }
+
+                // Ocultamos el loading
+                loadingDialog.dissmissDialog();
+
+                // Mostramos la actividad
+                startActivity(intent);
+
+                // Cerramos esta actividad
+                finish();
+
+            }.addOnFailureListener{
+
+                // Se muestra el mensaje indicando que el mensaje es incorrecto
+                showError("Lo sentimos no fue posible almacenar la aprobación de las políticas por el siguiente motivo: " + it);
+            };
 
         }.addOnFailureListener{
 
             // Se muestra el mensaje indicando que el mensaje es incorrecto
-            showError("Lo sentimos no fie posible almacenar la aprobación de las políticas por el siguiente motivo: " + it);
-        };
+            showError("Lo sentimos no fue posible almacenar la aprobación de las políticas por el siguiente motivo: " + it);
+        }
 
     }
 
@@ -97,6 +130,9 @@ class PolicyActivity : AppCompatActivity() {
 
         // definimos el mensaje a mostrar
         var messageText = message;
+
+        // Ocultamos el loading
+        loadingDialog.dissmissDialog();
 
         // validamos si el mensaje viene vacio
         if (messageText.isEmpty()) {

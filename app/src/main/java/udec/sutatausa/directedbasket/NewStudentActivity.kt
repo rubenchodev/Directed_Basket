@@ -289,7 +289,7 @@ class NewStudentActivity : AppCompatActivity() {
         val masterUserID = auth.currentUser.uid;
 
         // Creamos el objecto a enviar a la base de datos
-        val userObject = NewUserObject(false, "student", name, email, masterUserID, imageUrl, height, weight, date);
+        val userObject = NewUserObject(false, "player", name, email, masterUserID, imageUrl, height, weight, date);
 
         // Insertamos el nuevo registro
         mDatabase.child("users").child(newUserId).setValue(userObject)

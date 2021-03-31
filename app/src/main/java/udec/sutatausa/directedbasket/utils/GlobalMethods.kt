@@ -9,6 +9,7 @@ import android.text.format.DateFormat
 import android.util.Patterns
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import udec.sutatausa.directedbasket.R
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -197,5 +198,41 @@ class GlobalMethods( activity: Activity){
 
         // Aplicamos los cambios
         myEditor.apply();
+    }
+
+    /**
+     * Permite obtener la edad
+     */
+    fun getAge(dobString: String?): Int {
+        var date: Date? = null;
+        val sdf = SimpleDateFormat("dd/MM/yyyy");
+        try {
+            date = sdf.parse(dobString);
+        } catch (e: ParseException) {}
+        println(date)
+        // validamos si no existe fecha
+        if (date == null) return 0;
+
+        // obtenemos 2 instanciaas de fechas actuales
+        val dob: Calendar = Calendar.getInstance();
+        val today: Calendar = Calendar.getInstance();
+        println(dob)
+        // agregamos al primer objeto la fecha de nacimiento
+        dob.setTime(date);
+
+        // Obtenemos los datos de la fecha
+        val year: Int = dob.get(Calendar.YEAR);
+        val month: Int = dob.get(Calendar.MONTH);
+        val day: Int = dob.get(Calendar.DAY_OF_MONTH);
+
+        // Agregamos el año, mes y día
+        dob.set(year, month + 1, day);
+
+        // Obtenemos la edad
+        var age: Int = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
+            age--;
+        }
+        return age;
     }
 }

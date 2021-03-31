@@ -5,14 +5,16 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import org.json.JSONObject
+import udec.sutatausa.directedbasket.BasicClass.NewUserObject
+import udec.sutatausa.directedbasket.BasicClass.UserObject
 import udec.sutatausa.directedbasket.utils.GlobalMethods
 import udec.sutatausa.directedbasket.utils.LoadingDialog
 
@@ -112,35 +114,54 @@ class LoginActivity : AppCompatActivity() {
 
         // consultamos si existe información del usuario
         mDatabase.child("users").child(userId).get().addOnSuccessListener {
+            try{
 
-            //  variable para obtener el objeto
-            val response = JSONObject(it.value.toString());
+                // Obtenemos los datos del usuario
+                val userDataLogin: UserObject? = it.getValue(UserObject::class.java);
 
-            // Ocultamos el loading
-            loadingDialog.dissmissDialog();
-
-            // realizamos la apertura de la actividad principal
-            var intent: Intent? = null;
-
-            // Agregamos en una propieda la constraseña del usuario activo
-            GlobalMethods.addPropertyValue(this, "password_curr", password);
-
-            // validamos si el usuario ya se logueo
-            if(response.getBoolean("policy")){
+                // Ocultamos el loading
+                loadingDialog.dissmissDialog();
 
                 // realizamos la apertura de la actividad principal
-                intent = Intent(this, MainActivity::class.java);
-            } else {
+                var intent: Intent? = null;
 
-                // realizamos la apertura de la actividad principal
-                intent = Intent(this, PolicyActivity::class.java);
+                // Agregamos en una propieda la constraseña del usuario activo
+                GlobalMethods.addPropertyValue(this, "password_curr", password);
+
+                // validamos si el usuario ya se logueo
+                if(userDataLogin?.policy!!){
+
+                    // se valida si el usuario tiene el rol de "coach"
+                    if(userDataLogin.profile == "coach") {
+                        // realizamos la apertura de la actividad principal
+                        intent = Intent(this, MainActivity::class.java);
+                    } else {
+                        // realizamos la apertura de la actividad principal del jugador
+                        intent = Intent(this, PlayerActivity::class.java);
+                    }
+                } else {
+
+                    // realizamos la apertura de la actividad principal
+                    intent = Intent(this, PolicyActivity::class.java);
+                }
+
+                // Mostramos la actividad
+                startActivity(intent);
+
+                // Cerramos esta actividad
+                finish();
+
+            } catch (ex: Exception){
+
+                // ELiminamos la propiedad en la que guarda la contraseña
+                GlobalMethods.removeProperty(this, "password_curr");
+
+                // cerramos sesión por si la inicio
+                Firebase.auth.signOut();
+
+                // Se muestra el mensaje indicando que el mensaje es incorrecto
+                showError("Los datos ingresados no son validos." + ex.message);
             }
-
-            // Mostramos la actividad
-            startActivity(intent);
-
-            // Cerramos esta actividad
-            finish();
 
         }.addOnFailureListener{
 
