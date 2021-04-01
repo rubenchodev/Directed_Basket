@@ -70,9 +70,6 @@ class StatisticsActivity : AppCompatActivity() {
             // mostramos la ventana de confirmación
             GlobalMethods.showConfirm(getString(R.string.message_confirm_statistic), DialogInterface.OnClickListener { dialogInterface, i ->
 
-                // Mostramos la actividad
-                startActivity(Intent(this, PlayerDetailActivity::class.java));
-
                 // Cerramos esta actividad
                 finish();
             });
@@ -88,9 +85,6 @@ class StatisticsActivity : AppCompatActivity() {
 
         // mostramos la ventana de confirmación
         GlobalMethods.showConfirm(getString(R.string.message_confirm_statistic), DialogInterface.OnClickListener { dialogInterface, i ->
-
-            // Mostramos la actividad
-            startActivity(Intent(this, PlayerDetailActivity::class.java));
 
             // Cerramos esta actividad
             finish();

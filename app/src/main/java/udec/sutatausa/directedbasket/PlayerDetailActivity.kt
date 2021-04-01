@@ -93,9 +93,6 @@ class PlayerDetailActivity : AppCompatActivity() {
 
             // Mostramos la actividad
             startActivity(intentStatistic);
-
-            // Cerramos esta actividad
-            finish();
         }
 
         // iniciamos la clase
@@ -125,6 +122,30 @@ class PlayerDetailActivity : AppCompatActivity() {
         // establecemos las propiedads base
         playerChart?.setDrawDotLine(true);
         playerChart?.setShowPopup(LineView.SHOW_POPUPS_NONE);
+
+        val test = ArrayList<String>()
+        for (i in 0 until 10) {
+            test.add((i + 1).toString() + "/Mar");
+        }
+        playerChart?.setBottomTextList(test)
+        playerChart?.setColorArray(
+            intArrayOf(
+                Color.parseColor("#F44336"), Color.parseColor("#9C27B0"),
+                Color.parseColor("#2196F3"), Color.parseColor("#009688")
+            )
+        )
+
+        val dataList: ArrayList<Int> = ArrayList()
+        for (i in 0 until 10) {
+            dataList.add((i*Math.random()).toInt())
+        }
+
+        val dataLists: ArrayList<ArrayList<Int>> = ArrayList()
+        dataLists.add(dataList)
+        //dataLists.add(dataList2)
+        //dataLists.add(dataList3)
+
+        playerChart?.setDataList(dataLists);
     }
 
     /**
